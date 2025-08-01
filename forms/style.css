@@ -52,26 +52,39 @@ body::before {
     pointer-events: none;
 }
 
-.container {
+/* フルスクリーン背景コンテナ */
+.full-screen-container {
     width: 100%;
     min-height: 100vh;
     margin: 0;
+    padding: 16px; /* 周りに余白 */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+}
+
+/* フォームカード */
+.form-card {
+    width: 100%;
+    max-width: 500px; /* 最大幅を制限 */
     background: var(--glass-background);
     backdrop-filter: blur(24px);
     -webkit-backdrop-filter: blur(24px);
-    border: none; /* フルスクリーン */
-    border-radius: 0; /* ネイティブアプリ風 */
-    padding: 20px 16px 40px 16px; /* モバイルファースト全画面 */
+    border: 1px solid var(--glass-border);
+    border-radius: 24px; /* カード風の角丸 */
+    padding: 24px 20px 32px 20px;
     box-shadow: 
-        inset 0 1px 0 rgba(255, 255, 255, 0.5),
-        0 0 60px rgba(0, 0, 0, 0.1);
+        0 12px 40px rgba(0, 0, 0, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.5);
     position: relative;
     overflow: hidden;
     display: flex;
     flex-direction: column;
 }
 
-.container::before {
+.form-card::before {
     content: '';
     position: absolute;
     top: 0;
@@ -85,8 +98,6 @@ body::before {
 /* フォームコンテンツエリア */
 form {
     flex: 1;
-    max-width: 500px;
-    margin: 0 auto;
     width: 100%;
 }
 
@@ -243,9 +254,6 @@ button:active {
         inset 0 1px 0 rgba(255, 255, 255, 0.6);
     position: relative;
     overflow: hidden;
-    max-width: 500px;
-    margin-left: auto;
-    margin-right: auto;
     text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
@@ -260,28 +268,30 @@ button:active {
 
 /* モバイルファースト レスポンシブ設計 */
 
-/* 小さなモバイル (320px - 480px) - フルスクリーン */
+/* 小さなモバイル (320px - 480px) - カードスタイル */
 @media (max-width: 480px) {
-    .container {
-        padding: 16px 12px 32px 12px;
+    .full-screen-container {
+        padding: 12px;
     }
     
-    form {
+    .form-card {
+        padding: 20px 16px 28px 16px;
+        border-radius: 20px;
         max-width: 100%;
     }
     
     h1 {
         font-size: 1.6rem;
-        margin: 16px 0 6px 0;
+        margin: 12px 0 6px 0;
     }
     
     .subtitle {
         font-size: 0.9rem;
-        margin-bottom: 24px;
+        margin-bottom: 20px;
     }
     
     .form-group {
-        margin-bottom: 18px;
+        margin-bottom: 16px;
     }
     
     input[type="text"],
@@ -295,70 +305,71 @@ button:active {
     
     button {
         padding: 16px 24px;
-        min-width: 90%;
+        min-width: 100%;
         min-height: 56px;
         font-size: 1rem;
-        margin: 24px auto 16px auto;
+        margin: 20px auto 12px auto;
     }
     
     #gacha-result {
-        margin-top: 20px;
+        margin-top: 16px;
         padding: 20px 12px;
         border-radius: 16px;
     }
 }
 
-/* タブレット (769px - 1024px) - フルスクリーン */
+/* タブレット (769px - 1024px) - カードスタイル */
 @media (min-width: 769px) and (max-width: 1024px) {
-    .container {
-        padding: 40px 32px;
+    .full-screen-container {
+        padding: 24px;
     }
     
-    form {
+    .form-card {
+        padding: 32px 28px 40px 28px;
         max-width: 600px;
     }
     
     h1 {
         font-size: 2.2rem;
-        margin: 32px 0 12px 0;
+        margin: 24px 0 12px 0;
     }
     
     .subtitle {
         font-size: 1.1rem;
-        margin-bottom: 40px;
+        margin-bottom: 36px;
     }
     
     button {
         min-width: 320px;
-        margin: 40px auto 24px auto;
+        margin: 36px auto 20px auto;
     }
     
     #gacha-result {
-        margin-top: 32px;
-        padding: 32px 24px;
-        max-width: 600px;
+        margin-top: 28px;
+        padding: 28px 20px;
     }
 }
 
-/* デスクトップ (1025px+) - フルスクリーン（中央集約） */
+/* デスクトップ (1025px+) - カードスタイル（中央集約） */
 @media (min-width: 1025px) {
-    .container {
-        padding: 60px 40px;
-        justify-content: center;
+    .full-screen-container {
+        padding: 40px;
     }
     
-    form {
+    .form-card {
+        padding: 48px 40px 56px 40px;
         max-width: 700px;
+        border-radius: 28px;
     }
     
     h1 {
         font-size: 2.4rem;
-        margin: 40px 0 16px 0;
+        margin: 32px 0 16px 0;
     }
     
     .subtitle {
         font-size: 1.2rem;
-        margin-bottom: 48px;
+        margin-bottom: 44px;
     }
     
     .form-group {
@@ -378,19 +389,18 @@ button:active {
         min-width: 360px;
         min-height: 72px;
         font-size: 1.2rem;
-        margin: 48px auto 32px auto;
+        margin: 44px auto 28px auto;
     }
     
     #gacha-result {
-        margin-top: 40px;
-        padding: 40px 32px;
-        max-width: 700px;
+        margin-top: 36px;
+        padding: 36px 28px;
         border-radius: 24px;
     }
 }
 
 /* GPU加速とパフォーマンス最適化 */
-.container,
+.form-card,
 input[type="text"],
 input[type="email"],
 textarea,
@@ -417,7 +427,7 @@ button,
         animation: none !important;
     }
     
-    .container,
+    .form-card,
     input[type="text"],
     input[type="email"],
     textarea,
@@ -431,8 +441,8 @@ button,
 
 /* 高解像度ディスプレイ対応 */
 @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
-    .container {
-        backdrop-filter: blur(24px);
-        -webkit-backdrop-filter: blur(24px);
+    .form-card {
+        backdrop-filter: blur(28px);
+        -webkit-backdrop-filter: blur(28px);
     }
 }
