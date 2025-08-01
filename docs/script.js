@@ -286,34 +286,34 @@ async function callGAS(action, data = {}) {
                 data: data
             });
         }
-        
+
         // GETパラメータとしてデータを送信
         const params = new URLSearchParams({
             action: action,
             ...Object.fromEntries(
                 Object.entries(data).map(([key, value]) => [
-                    key, 
+                    key,
                     typeof value === 'object' ? JSON.stringify(value) : String(value)
                 ])
             )
         });
-        
+
         const url = `${GAS_WEB_APP_URL}?${params.toString()}`;
-        
+
         if (DEBUG_MODE) {
             console.log('📤 Request URL:', url);
         }
-        
+
         const response = await fetch(url, {
             method: 'GET',
             // CORSヘッダーは送信しない（シンプルリクエスト）
         });
-        
+
         if (DEBUG_MODE) {
             console.log('📥 Response Status:', response.status);
             console.log('📥 Response Headers:', Object.fromEntries(response.headers.entries()));
         }
-        
+
         if (!response.ok) {
             const errorText = await response.text();
             if (DEBUG_MODE) {
@@ -321,19 +321,19 @@ async function callGAS(action, data = {}) {
             }
             throw new Error(`HTTP error! status: ${response.status}, text: ${errorText}`);
         }
-        
+
         const result = await response.json();
-        
+
         if (DEBUG_MODE) {
             console.log('✅ Response Data:', result);
         }
-        
+
         if (!result.success) {
             throw new Error(result.message || 'API call failed');
         }
-        
+
         return result.data;
-        
+
     } catch (error) {
         console.error(`❌ GAS API Error (${action}):`, error);
         if (DEBUG_MODE) {
