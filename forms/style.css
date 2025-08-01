@@ -139,7 +139,7 @@ textarea {
     font-size: 1rem;
     font-weight: 500;
     color: var(--text-color);
-    background: rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.9);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     position: relative;
     z-index: 2;
@@ -153,10 +153,8 @@ input:focus,
 textarea:focus {
     outline: none;
     border-color: var(--primary-color);
-    background: rgba(255, 255, 255, 0.25);
-    box-shadow: 
-        0 0 0 2px rgba(0, 122, 255, 0.3),
-        0 4px 12px rgba(0, 122, 255, 0.1);
+    background: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 0 0 2px rgba(0, 122, 255, 0.3);
 }
 
 /* モバイルファースト カスタムセレクトボックス */
@@ -180,14 +178,12 @@ textarea:focus {
     pointer-events: none; /* スクロールを妨げない */
 }
 
-/* ドロップダウン開放時に他の要素をぼかす（JS制御） */
+/* ドロップダウン開放時に他の要素を暗くする（軽量版） */
 body.dropdown-open .form-group:not(.active-dropdown),
 body.dropdown-open button,
 body.dropdown-open h1,
 body.dropdown-open .subtitle {
-    filter: blur(2px);
-    opacity: 0.3;
-    transition: all 0.2s ease;
+    opacity: 0.4;
 }
 
 .select-trigger {
@@ -198,7 +194,7 @@ body.dropdown-open .subtitle {
     font-size: 1rem;
     font-weight: 500;
     color: var(--text-color);
-    background: rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.9);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     cursor: pointer;
     display: flex;
@@ -239,7 +235,7 @@ body.dropdown-open .subtitle {
     background: #ffffff; /* 完全に不透明 */
     border: 1px solid rgba(0, 122, 255, 0.3);
     border-radius: 16px;
-    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
     max-height: 0;
     overflow: hidden;
     opacity: 0;
@@ -253,6 +249,7 @@ body.dropdown-open .subtitle {
     opacity: 1;
     overflow-y: auto; /* 縦スクロール有効 */
     -webkit-overflow-scrolling: touch; /* iOS慣性スクロール */
+    will-change: transform, opacity; /* GPU加速 */
 }
 
 .select-option {

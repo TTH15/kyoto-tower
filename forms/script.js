@@ -245,8 +245,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 e.stopPropagation();
             });
 
-            // トリガークリックでドロップダウン開閉
+            // トリガークリックでドロップダウン開閉（モバイル最適化）
             trigger.addEventListener('click', (e) => {
+                e.preventDefault();
                 e.stopPropagation();
                 closeAllSelects();
                 customSelect.classList.toggle('active');
@@ -261,9 +262,17 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             });
 
+            // タッチイベントで即座に反応
+            trigger.addEventListener('touchend', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                trigger.click();
+            });
+
             // 選択肢クリック処理
             selectOptions.forEach(option => {
                 option.addEventListener('click', (e) => {
+                    e.preventDefault();
                     e.stopPropagation();
 
                     // 全ての選択済みクラスを削除
@@ -282,12 +291,13 @@ document.addEventListener('DOMContentLoaded', function () {
                     customSelect.classList.remove('active');
                     customSelect.closest('.form-group').classList.remove('active-dropdown');
                     document.body.classList.remove('dropdown-open');
+                });
 
-                    // 選択時のアニメーション
-                    trigger.style.transform = 'scale(0.98)';
-                    setTimeout(() => {
-                        trigger.style.transform = '';
-                    }, 150);
+                // タッチエンドで即座に反応（モバイル最適化）
+                option.addEventListener('touchend', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    option.click();
                 });
 
                 // 軽量化：ホバーエフェクトはCSSに委譲
