@@ -6,6 +6,39 @@ const GAS_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbw593RB4kx3nbQX
 // デバッグモード
 const DEBUG_MODE = true;
 
+/**
+ * デバッグメッセージを画面に表示する関数
+ */
+function showDebugMessage(message, type = 'info') {
+    if (!DEBUG_MODE) return;
+
+    const debugDiv = document.createElement('div');
+    debugDiv.style.cssText = `
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        right: 20px;
+        padding: 12px;
+        border-radius: 8px;
+        color: white;
+        font-weight: bold;
+        z-index: 10000;
+        background: ${type === 'success' ? '#28a745' : type === 'error' ? '#dc3545' : '#007bff'};
+        border: 1px solid rgba(255,255,255,0.3);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    `;
+    debugDiv.textContent = message;
+
+    document.body.appendChild(debugDiv);
+
+    // 5秒後に自動削除
+    setTimeout(() => {
+        if (debugDiv.parentNode) {
+            debugDiv.parentNode.removeChild(debugDiv);
+        }
+    }, 5000);
+}
+
 // 多言語翻訳データ（スプレッドシートから取得予定、フォールバック用）
 const translations = {
     ja: {
@@ -703,36 +736,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         }
     }
 
-    // デバッグメッセージ表示
-    function showDebugMessage(message, type = 'info') {
-        if (!DEBUG_MODE) return;
 
-        const debugDiv = document.createElement('div');
-        debugDiv.style.cssText = `
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            right: 20px;
-            padding: 12px;
-            border-radius: 8px;
-            color: white;
-            font-weight: bold;
-            z-index: 10000;
-            background: ${type === 'success' ? '#28a745' : type === 'error' ? '#dc3545' : '#007bff'};
-            border: 1px solid rgba(255,255,255,0.3);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-        `;
-        debugDiv.textContent = message;
-
-        document.body.appendChild(debugDiv);
-
-        // 5秒後に自動削除
-        setTimeout(() => {
-            if (debugDiv.parentNode) {
-                debugDiv.parentNode.removeChild(debugDiv);
-            }
-        }, 5000);
-    }
 
     // 接続テスト機能
     async function testConnection() {

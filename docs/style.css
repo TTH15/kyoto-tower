@@ -23,7 +23,7 @@ body {
     background-color: #667eea;
     background: 
         var(--background),
-        url('../assets/images/kyoto-tower-bg.jpg') center/cover no-repeat,
+                    url('./assets/images/kyoto-tower-bg.jpg') center/cover no-repeat,
         linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     background-blend-mode: overlay;
     color: var(--text-color);
