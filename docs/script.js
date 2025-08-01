@@ -286,16 +286,16 @@ async function callGAS(action, data = {}) {
                 data: data
             });
         }
-        
+
         const requestBody = JSON.stringify({
             action: action,
             ...data
         });
-        
+
         if (DEBUG_MODE) {
             console.log('📤 Request Body:', requestBody);
         }
-        
+
         const response = await fetch(GAS_WEB_APP_URL, {
             method: 'POST',
             headers: {
@@ -303,12 +303,12 @@ async function callGAS(action, data = {}) {
             },
             body: requestBody
         });
-        
+
         if (DEBUG_MODE) {
             console.log('📥 Response Status:', response.status);
             console.log('📥 Response Headers:', Object.fromEntries(response.headers.entries()));
         }
-        
+
         if (!response.ok) {
             const errorText = await response.text();
             if (DEBUG_MODE) {
@@ -316,19 +316,19 @@ async function callGAS(action, data = {}) {
             }
             throw new Error(`HTTP error! status: ${response.status}, text: ${errorText}`);
         }
-        
+
         const result = await response.json();
-        
+
         if (DEBUG_MODE) {
             console.log('✅ Response Data:', result);
         }
-        
+
         if (!result.success) {
             throw new Error(result.message || 'API call failed');
         }
-        
+
         return result.data;
-        
+
     } catch (error) {
         console.error(`❌ GAS API Error (${action}):`, error);
         if (DEBUG_MODE) {
@@ -425,29 +425,29 @@ async function saveResponse(responses, language) {
         if (DEBUG_MODE) {
             console.log('💾 Starting saveResponse:', { responses, language });
         }
-        
+
         const result = await callGAS('saveResponse', {
             responses: responses,
             language: language,
             ip: 'unknown', // クライアントサイドではIPは取得できません
             timestamp: new Date().toISOString()
         });
-        
+
         console.log('✅ アンケート回答をスプレッドシートに保存しました:', result);
-        
+
         // 成功時の視覚的フィードバック
         if (DEBUG_MODE) {
             showDebugMessage('✅ スプレッドシート保存成功', 'success');
         }
-        
+
     } catch (error) {
         console.error('❌ アンケート回答の保存に失敗しました:', error);
-        
+
         // エラー時の視覚的フィードバック
         if (DEBUG_MODE) {
             showDebugMessage('❌ スプレッドシート保存失敗: ' + error.message, 'error');
         }
-        
+
         // 保存に失敗してもガチャは実行する
     }
 }
@@ -477,7 +477,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     if (DEBUG_MODE) {
         console.log('🔧 Debug mode enabled');
         showDebugMessage('🔧 デバッグモード有効', 'info');
-        
+
         // 5秒後に接続テストを実行
         setTimeout(() => {
             testConnection();
@@ -701,7 +701,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     // デバッグメッセージ表示
     function showDebugMessage(message, type = 'info') {
         if (!DEBUG_MODE) return;
-        
+
         const debugDiv = document.createElement('div');
         debugDiv.style.cssText = `
             position: fixed;
@@ -718,9 +718,9 @@ document.addEventListener('DOMContentLoaded', async function () {
             box-shadow: 0 4px 12px rgba(0,0,0,0.3);
         `;
         debugDiv.textContent = message;
-        
+
         document.body.appendChild(debugDiv);
-        
+
         // 5秒後に自動削除
         setTimeout(() => {
             if (debugDiv.parentNode) {
@@ -732,19 +732,19 @@ document.addEventListener('DOMContentLoaded', async function () {
     // 接続テスト機能
     async function testConnection() {
         if (!DEBUG_MODE) return;
-        
+
         console.log('🔧 Starting connection test...');
         showDebugMessage('🔧 接続テスト開始', 'info');
-        
+
         try {
             // 1. 基本的なGETリクエストテスト
             const response = await fetch(GAS_WEB_APP_URL);
             console.log('📡 Basic GET test:', response.status, response.statusText);
-            
+
             if (response.ok) {
                 const text = await response.text();
                 console.log('📥 GET Response:', text);
-                
+
                 try {
                     const json = JSON.parse(text);
                     console.log('✅ GET JSON parsed:', json);
@@ -756,19 +756,19 @@ document.addEventListener('DOMContentLoaded', async function () {
             } else {
                 showDebugMessage('❌ 基本接続 失敗: ' + response.status, 'error');
             }
-            
+
             // 2. 翻訳データ取得テスト
             console.log('🌐 Testing translations...');
             const translations = await getTranslations();
             console.log('✅ Translations test passed:', Object.keys(translations));
             showDebugMessage('✅ 翻訳データ取得 成功', 'success');
-            
+
             // 3. ガチャ設定取得テスト
             console.log('🎲 Testing gacha config...');
             const gachaConfig = await getGachaConfig();
             console.log('✅ Gacha config test passed:', gachaConfig.length, 'prizes');
             showDebugMessage('✅ ガチャ設定取得 成功', 'success');
-            
+
         } catch (error) {
             console.error('❌ Connection test failed:', error);
             showDebugMessage('❌ 接続テスト失敗: ' + error.message, 'error');
