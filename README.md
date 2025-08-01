@@ -13,26 +13,29 @@
 
 ```
 kyoto-tower/
-├── forms/                  # Webアプリケーション本体
-│   ├── index.html         # メインHTMLファイル
-│   ├── style.css          # スタイルシート
-│   └── script.js          # JavaScript（Google Sheets連携含む）
-├── assets/                # 静的ファイル
-│   └── images/           # 画像ファイル
-│       └── IMG_6272.JPG  # 京都タワー背景画像
-├── docs/                  # ドキュメント
-│   ├── GOOGLE_SHEETS_SETUP.md  # セットアップ手順書
-│   └── manifest.md        # アプリマニフェスト
-├── scripts/               # サーバーサイドスクリプト
-│   └── gas-script.js      # Google Apps Script用コード
-└── README.md              # このファイル
+├── docs/                 # Webアプリケーション本体（GitHub Pages配信用）
+│   ├── index.html        # メインHTMLファイル
+│   ├── script.js         # JavaScript（Google Sheets連携含む）
+│   └── style.css         # スタイルシート
+├── assets/               # 静的ファイル
+│   └── images/          # 画像ファイル
+│       └── IMG_6272.JPG # 京都タワー背景画像
+├── documentation/        # プロジェクトドキュメント
+│   ├── GOOGLE_SHEETS_SETUP.md    # セットアップ手順書（旧版）
+│   ├── STEP_BY_STEP_SETUP.md     # 詳細セットアップ手順書
+│   └── manifest.md       # アプリマニフェスト
+├── scripts/              # サーバーサイドスクリプト
+│   └── gas-script.js     # Google Apps Script用コード
+├── .gitignore            # Git除外設定
+└── README.md             # このファイル
 ```
 
 ## 🚀 セットアップ
 
 ### 基本セットアップ
 1. このプロジェクトをクローンまたはダウンロード
-2. `forms/index.html` をWebサーバーで提供
+2. `docs/index.html` をWebサーバーで提供
+3. GitHub Pages: [https://TTH15.github.io/kyoto-tower/](https://TTH15.github.io/kyoto-tower/)
 
 ### Google スプレッドシート連携（オプション）
 Google スプレッドシートとの連携により、以下の機能が利用できます：
@@ -40,7 +43,7 @@ Google スプレッドシートとの連携により、以下の機能が利用�
 - ガチャ確率の動的設定
 - 翻訳データの簡単管理
 
-詳細は [`docs/GOOGLE_SHEETS_SETUP.md`](docs/GOOGLE_SHEETS_SETUP.md) をご覧ください。
+詳細は [`documentation/STEP_BY_STEP_SETUP.md`](documentation/STEP_BY_STEP_SETUP.md) をご覧ください。
 
 ## 🎯 機能一覧
 
@@ -115,7 +118,7 @@ Google スプレッドシートの「ガチャ設定」シートで確率を調�
 質問やサポートが必要な場合は、以下の方法でお問い合わせください：
 
 - GitHub Issues でバグ報告や機能要望
-- ドキュメントの確認（`docs/` フォルダ内）
+- ドキュメントの確認（`documentation/` フォルダ内）
 
 ---
 
