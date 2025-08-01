@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <title>アンケート＆ガチャ</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="container">
+        <h1>京都タワー SANDO バル アンケート</h1>
+        <p class="subtitle">アンケートに答えてガチャを回そう！</p>
+
+        <form id="survey-form">
+            <div class="form-group">
+                <label for="origin">1. どこの出身ですか？</label>
+                <input type="text" id="origin" name="origin" placeholder="例：東京、大阪、韓国、アメリカ等" required>
+            </div>
+
+            <div class="form-group">
+                <label for="how_know">2. 京都タワーの地下のフードコート「SANDO バル」を何で知りましたか？</label>
+                <div class="custom-select" data-name="how_know" data-required="true">
+                    <div class="select-trigger">
+                        <span class="select-text">選択してください</span>
+                        <div class="select-arrow">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="6,9 12,15 18,9"></polyline>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="select-options">
+                        <div class="select-option" data-value="">選択してください</div>
+                        <div class="select-option" data-value="インターネット検索">インターネット検索</div>
+                        <div class="select-option" data-value="SNS">SNS（Instagram、Twitter等）</div>
+                        <div class="select-option" data-value="旅行ガイドブック">旅行ガイドブック</div>
+                        <div class="select-option" data-value="友人・知人の紹介">友人・知人の紹介</div>
+                        <div class="select-option" data-value="京都タワーの案内">京都タワーの案内</div>
+                        <div class="select-option" data-value="偶然見つけた">偶然見つけた</div>
+                        <div class="select-option" data-value="その他">その他</div>
+                    </div>
+                    <input type="hidden" name="how_know" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="research_before">3. 日本に来る「前」に、どのように訪問先についてリサーチしましたか？</label>
+                <div class="custom-select" data-name="research_before" data-required="true">
+                    <div class="select-trigger">
+                        <span class="select-text">選択してください</span>
+                        <div class="select-arrow">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="6,9 12,15 18,9"></polyline>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="select-options">
+                        <div class="select-option" data-value="">選択してください</div>
+                        <div class="select-option" data-value="Google検索">Google検索</div>
+                        <div class="select-option" data-value="旅行サイト">旅行サイト（じゃらん、楽天トラベル等）</div>
+                        <div class="select-option" data-value="SNS">SNS（Instagram、TikTok等）</div>
+                        <div class="select-option" data-value="YouTube">YouTube</div>
+                        <div class="select-option" data-value="旅行ガイドブック">旅行ガイドブック</div>
+                        <div class="select-option" data-value="旅行会社">旅行会社</div>
+                        <div class="select-option" data-value="友人・知人に相談">友人・知人に相談</div>
+                        <div class="select-option" data-value="特にリサーチしなかった">特にリサーチしなかった</div>
+                    </div>
+                    <input type="hidden" name="research_before" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="research_after">4. 日本に来た「後」、滞在中には、どのように訪問先についてリサーチしていますか？</label>
+                <div class="custom-select" data-name="research_after" data-required="true">
+                    <div class="select-trigger">
+                        <span class="select-text">選択してください</span>
+                        <div class="select-arrow">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="6,9 12,15 18,9"></polyline>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="select-options">
+                        <div class="select-option" data-value="">選択してください</div>
+                        <div class="select-option" data-value="Google マップ">Google マップ</div>
+                        <div class="select-option" data-value="Google 検索">Google 検索</div>
+                        <div class="select-option" data-value="SNS">SNS（Instagram、TikTok等）</div>
+                        <div class="select-option" data-value="旅行アプリ">旅行アプリ</div>
+                        <div class="select-option" data-value="ホテルの案内">ホテルの案内</div>
+                        <div class="select-option" data-value="観光案内所">観光案内所</div>
+                        <div class="select-option" data-value="現地の人に聞く">現地の人に聞く</div>
+                        <div class="select-option" data-value="特にリサーチしていない">特にリサーチしていない</div>
+                    </div>
+                    <input type="hidden" name="research_after" required>
+                </div>
+            </div>
+
+            <button type="submit">送信してガチャ！</button>
+        </form>
+
+        <div id="gacha-result"></div>
+        <img id="gacha-image" style="display:none" />
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,538 @@
+/* Apple Liquid Glass カラーパレット */
+:root {
+    --primary-color: #007AFF; /* Apple Blue */
+    --secondary-color: #5856D6; /* Apple Purple */
+    --accent-color: #FF9500; /* Apple Orange */
+    --success-color: #34C759; /* Apple Green */
+    --background-gradient: linear-gradient(135deg, 
+        rgba(88, 86, 214, 0.8) 0%, 
+        rgba(0, 122, 255, 0.6) 50%, 
+        rgba(52, 199, 89, 0.4) 100%);
+    --glass-background: rgba(255, 255, 255, 0.25);
+    --glass-border: rgba(255, 255, 255, 0.3);
+    --glass-highlight: linear-gradient(135deg, 
+        rgba(255, 255, 255, 0.4), 
+        rgba(255, 255, 255, 0.1));
+    --text-color: #1d1d1f;
+    --text-secondary: rgba(29, 29, 31, 0.7);
+    --shadow-glass: 0 8px 32px rgba(31, 38, 135, 0.37);
+    --shadow-hover: 0 15px 50px rgba(0, 0, 0, 0.25);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+    margin: 0;
+    padding: 20px;
+    background: var(--background-gradient);
+    background-attachment: fixed;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-color);
+    line-height: 1.6;
+    position: relative;
+    overflow-x: hidden;
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+        radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(255, 119, 95, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 40% 40%, rgba(120, 119, 198, 0.2) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: -1;
+}
+
+.container {
+    max-width: 600px;
+    width: 100%;
+    padding: 0 20px;
+    position: relative;
+    z-index: 1;
+}
+
+h1 {
+    text-align: center;
+    color: white;
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    font-weight: 700;
+}
+
+.subtitle {
+    text-align: center;
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 1.1rem;
+    margin-bottom: 30px;
+    font-weight: 300;
+}
+
+form {
+    background: var(--glass-background);
+    background-image: var(--glass-highlight);
+    padding: 40px;
+    border-radius: 24px;
+    box-shadow: var(--shadow-glass);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    border-top: 1px solid rgba(255, 255, 255, 0.5);
+    width: 100%;
+    position: relative;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    overflow: hidden;
+}
+
+form::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, 
+        transparent 0%, 
+        rgba(255, 255, 255, 0.8) 50%, 
+        transparent 100%);
+    z-index: 1;
+}
+
+/* ホバーエフェクト削除 */
+
+.form-group {
+    margin-bottom: 25px;
+    position: relative;
+    z-index: 5;
+}
+
+label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: var(--text-color);
+    font-size: 1rem;
+    text-align: left;
+    position: relative;
+    z-index: 3;
+    transition: color 0.2s ease;
+}
+
+input,
+textarea {
+    width: 100%;
+    padding: 18px 20px; /* タッチターゲット拡大 */
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 16px;
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--text-color);
+    background: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    position: relative;
+    z-index: 2;
+    min-height: 48px; /* タッチターゲット最小サイズ */
+    touch-action: manipulation;
+}
+
+/* ホバーエフェクト削除 */
+
+input:focus,
+textarea:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    background: rgba(255, 255, 255, 0.25);
+    box-shadow: 
+        0 0 0 2px rgba(0, 122, 255, 0.3),
+        0 4px 12px rgba(0, 122, 255, 0.1);
+}
+
+/* モバイルファースト カスタムセレクトボックス */
+.custom-select {
+    position: relative;
+    z-index: 20;
+    isolation: isolate;
+    margin-bottom: 0; /* フォームグループが管理 */
+}
+
+/* ドロップダウン開放時の背景オーバーレイ */
+.custom-select.active::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6); /* より濃いオーバーレイ */
+    z-index: 9998;
+    pointer-events: none; /* スクロールを妨げない */
+}
+
+/* ドロップダウン開放時に他の要素をぼかす（JS制御） */
+body.dropdown-open .form-group:not(.active-dropdown),
+body.dropdown-open button,
+body.dropdown-open h1,
+body.dropdown-open .subtitle {
+    filter: blur(2px);
+    opacity: 0.3;
+    transition: all 0.2s ease;
+}
+
+.select-trigger {
+    width: 100%;
+    padding: 18px 20px; /* タッチターゲット拡大 */
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 16px;
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--text-color);
+    background: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    user-select: none;
+    touch-action: manipulation; /* タッチ最適化 */
+    min-height: 48px; /* タッチターゲット最小サイズ */
+}
+
+/* ホバーエフェクト削除 */
+
+.custom-select.active .select-trigger {
+    border-color: var(--primary-color);
+    background: rgba(255, 255, 255, 0.25);
+    box-shadow: 0 0 0 2px rgba(0, 122, 255, 0.3);
+}
+
+.select-arrow {
+    width: 20px;
+    height: 20px;
+    color: var(--primary-color);
+    pointer-events: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.custom-select.active .select-arrow {
+    transform: rotate(180deg);
+}
+
+.select-options {
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+    right: 0;
+    background: #ffffff; /* 完全に不透明 */
+    border: 1px solid rgba(0, 122, 255, 0.3);
+    border-radius: 16px;
+    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.4);
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    z-index: 9999; /* 最高優先度 */
+}
+
+/* アニメーション削除 */
+
+.custom-select.active .select-options {
+    max-height: 280px; /* 高さ制限 */
+    opacity: 1;
+    overflow-y: auto; /* 縦スクロール有効 */
+    -webkit-overflow-scrolling: touch; /* iOS慣性スクロール */
+}
+
+.select-option {
+    padding: 16px 20px; /* タッチターゲット拡大 */
+    font-size: 1rem;
+    color: #1d1d1f; /* より濃い文字色 */
+    font-weight: 500;
+    cursor: pointer;
+    margin: 1px 4px;
+    border-radius: 8px;
+    min-height: 48px; /* タッチターゲット最小サイズ */
+    display: flex;
+    align-items: center;
+    touch-action: manipulation;
+    background: #ffffff; /* 確実に白背景 */
+}
+
+.select-option:first-child {
+    margin-top: 4px;
+}
+
+.select-option:last-child {
+    margin-bottom: 4px;
+}
+
+/* ホバーエフェクト削除 */
+
+.select-option.selected {
+    background: rgba(0, 122, 255, 0.25);
+    color: var(--text-color);
+    font-weight: 600;
+}
+
+/* タッチ用アクティブ状態 */
+.select-option:active {
+    background: rgba(0, 122, 255, 0.35);
+    transform: scale(0.98);
+}
+
+button {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    background-size: 200% 200%;
+    color: white;
+    padding: 20px 40px; /* タッチターゲット拡大 */
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 24px;
+    cursor: pointer;
+    font-size: 1.1rem;
+    font-weight: 600;
+    display: block;
+    margin: 30px auto 0;
+    box-shadow: 0 8px 24px rgba(0, 122, 255, 0.3);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    position: relative;
+    overflow: hidden;
+    min-height: 56px; /* タッチターゲット推奨サイズ */
+    touch-action: manipulation;
+}
+
+button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, 
+        transparent, 
+        rgba(255, 255, 255, 0.4), 
+        transparent);
+    transition: left 0.6s ease;
+}
+
+/* ホバーエフェクト削除 */
+
+/* タッチ用アクティブ状態 */
+button:active {
+    transform: scale(0.98);
+    box-shadow: 0 4px 15px rgba(0, 122, 255, 0.4);
+}
+
+#gacha-result {
+    margin-top: 40px;
+    padding: 40px;
+    font-size: 2rem;
+    font-weight: 700;
+    text-align: center;
+    background: var(--glass-background);
+    background-image: var(--glass-highlight);
+    border-radius: 24px;
+    box-shadow: var(--shadow-glass);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    border-top: 1px solid rgba(255, 255, 255, 0.5);
+    color: var(--text-color);
+    animation: fadeInUp 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    display: none; /* 初期状態では非表示 */
+    position: relative;
+    overflow: hidden;
+}
+
+#gacha-result::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, 
+        transparent 0%, 
+        rgba(255, 255, 255, 0.8) 50%, 
+        transparent 100%);
+    z-index: 1;
+}
+
+#gacha-image {
+    width: 200px;
+    height: 200px;
+    margin: 20px auto;
+    display: block;
+    border-radius: 24px;
+    box-shadow: 
+        0 20px 40px rgba(0, 0, 0, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    animation: bounceIn 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    object-fit: cover;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+/* Liquid Glass アニメーション */
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        transform: translateY(40px) scale(0.9);
+        filter: blur(10px);
+    }
+    50% {
+        opacity: 0.8;
+        transform: translateY(10px) scale(0.95);
+        filter: blur(5px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        filter: blur(0px);
+    }
+}
+
+@keyframes bounceIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.3) rotate(-10deg);
+        filter: blur(10px);
+    }
+    50% {
+        opacity: 0.8;
+        transform: scale(1.1) rotate(5deg);
+        filter: blur(2px);
+    }
+    75% {
+        opacity: 0.9;
+        transform: scale(0.95) rotate(-2deg);
+        filter: blur(1px);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1) rotate(0deg);
+        filter: blur(0px);
+    }
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: -200% 0;
+    }
+    100% {
+        background-position: 200% 0;
+    }
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0px) rotate(0deg);
+    }
+    33% {
+        transform: translateY(-10px) rotate(1deg);
+    }
+    66% {
+        transform: translateY(5px) rotate(-1deg);
+    }
+}
+
+/* 浮遊パーティクルエフェクト */
+.container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        radial-gradient(2px 2px at 20px 30px, rgba(255, 255, 255, 0.3), transparent),
+        radial-gradient(2px 2px at 40px 70px, rgba(255, 255, 255, 0.3), transparent),
+        radial-gradient(1px 1px at 90px 40px, rgba(255, 255, 255, 0.3), transparent),
+        radial-gradient(1px 1px at 130px 80px, rgba(255, 255, 255, 0.3), transparent),
+        radial-gradient(2px 2px at 160px 30px, rgba(255, 255, 255, 0.3), transparent);
+    background-repeat: repeat;
+    background-size: 200px 100px;
+    animation: float 6s ease-in-out infinite;
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* ホバーエフェクト削除 */
+
+/* レスポンシブデザイン */
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+    }
+    
+    h1 {
+        font-size: 2rem;
+    }
+    
+    form {
+        padding: 25px;
+        border-radius: 15px;
+    }
+    
+    input,
+    textarea {
+        padding: 16px;
+        min-height: 44px; /* モバイル最小タッチサイズ */
+    }
+    
+    .select-trigger {
+        padding: 16px 18px;
+        min-height: 44px;
+    }
+    
+    .select-option {
+        padding: 14px 18px;
+        min-height: 44px;
+    }
+    
+    button {
+        padding: 15px 30px;
+        font-size: 1rem;
+    }
+    
+    #gacha-result {
+        font-size: 1.5rem;
+        padding: 20px;
+    }
+    
+    #gacha-image {
+        width: 150px;
+        height: 150px;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 0 10px;
+    }
+    
+    h1 {
+        font-size: 1.8rem;
+    }
+    
+    form {
+        padding: 20px;
+    }
+    
+    .subtitle {
+        font-size: 1rem;
+    }
+}
