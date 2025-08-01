@@ -22,24 +22,34 @@ body {
     background: var(--background);
     color: var(--text-color);
     min-height: 100vh;
-    padding: 20px;
+    min-height: 100dvh; /* 動的ビューポート高さ */
+    margin: 0;
+    padding: 0;
     line-height: 1.6;
+    overflow-x: hidden; /* 横スクロール防止 */
+    
+    /* iOS Safe Areaサポート */
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
 }
 
 .container {
-    max-width: 600px;
-    margin: 0 auto;
+    width: 100%;
+    min-height: 100vh;
+    margin: 0;
     background: var(--glass-background);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    border: 1px solid var(--glass-border);
-    border-radius: 24px;
-    padding: 32px 24px; /* モバイルファースト */
-    box-shadow: 
-        0 8px 32px var(--glass-shadow),
-        inset 0 1px 0 rgba(255, 255, 255, 0.5);
+    border: none; /* フルスクリーン */
+    border-radius: 0; /* ネイティブアプリ風 */
+    padding: 20px 16px 40px 16px; /* モバイルファースト全画面 */
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3);
     position: relative;
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
 }
 
 .container::before {
@@ -53,23 +63,31 @@ body {
     pointer-events: none;
 }
 
+/* フォームコンテンツエリア */
+form {
+    flex: 1;
+    max-width: 500px;
+    margin: 0 auto;
+    width: 100%;
+}
+
 h1 {
-    font-size: 2rem;
+    font-size: 1.8rem;
     font-weight: 700;
     text-align: center;
-    margin-bottom: 8px;
+    margin: 20px 0 8px 0;
     color: var(--text-color);
 }
 
 .subtitle {
     text-align: center;
-    color: #666;
-    margin-bottom: 40px;
-    font-size: 1.1rem;
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: 32px;
+    font-size: 1rem;
 }
 
 .form-group {
-    margin-bottom: 24px;
+    margin-bottom: 20px;
 }
 
 label {
@@ -148,7 +166,7 @@ button {
     font-size: 1.1rem;
     font-weight: 700;
     display: block;
-    margin: 40px auto 0;
+    margin: 32px auto 20px auto;
     min-width: 240px; /* モバイルファースト */
     min-height: 64px; /* タッチターゲット拡大 */
     box-shadow: 
@@ -184,25 +202,28 @@ button:active {
         inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
 
-/* Liquid Glass ガチャ結果エリア */
+/* Liquid Glass ガチャ結果エリア - フルスクリーン */
 #gacha-result {
-    margin-top: 40px;
-    padding: 32px 24px;
+    margin-top: 24px;
+    padding: 24px 16px;
     background: linear-gradient(135deg, rgba(240, 147, 251, 0.3), rgba(245, 87, 108, 0.3));
     backdrop-filter: blur(24px);
     -webkit-backdrop-filter: blur(24px);
     border: 1px solid rgba(255, 255, 255, 0.4);
-    border-radius: 24px;
+    border-radius: 20px;
     text-align: center;
     color: white;
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     font-weight: 600;
     display: none;
     box-shadow: 
-        0 12px 32px rgba(240, 147, 251, 0.3),
+        0 8px 24px rgba(240, 147, 251, 0.3),
         inset 0 1px 0 rgba(255, 255, 255, 0.5);
     position: relative;
     overflow: hidden;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 #gacha-image {
@@ -216,82 +237,109 @@ button:active {
 
 /* モバイルファースト レスポンシブ設計 */
 
-/* 小さなモバイル (320px - 480px) */
+/* 小さなモバイル (320px - 480px) - フルスクリーン */
 @media (max-width: 480px) {
-    body {
-        padding: 12px;
+    .container {
+        padding: 16px 12px 32px 12px;
     }
     
-    .container {
-        padding: 20px 16px;
-        border-radius: 20px;
-        margin: 10px auto;
+    form {
+        max-width: 100%;
     }
     
     h1 {
-        font-size: 1.5rem;
-        margin-bottom: 6px;
+        font-size: 1.6rem;
+        margin: 16px 0 6px 0;
     }
     
     .subtitle {
-        font-size: 0.95rem;
-        margin-bottom: 32px;
+        font-size: 0.9rem;
+        margin-bottom: 24px;
     }
     
     .form-group {
-        margin-bottom: 20px;
+        margin-bottom: 18px;
     }
     
     input[type="text"],
     input[type="email"],
     textarea,
     select {
-        padding: 16px 18px;
+        padding: 16px 16px;
         font-size: 16px; /* iOSズーム防止 */
         border-radius: 14px;
     }
     
     button {
-        padding: 18px 32px;
-        min-width: 200px;
+        padding: 16px 24px;
+        min-width: 90%;
         min-height: 56px;
         font-size: 1rem;
+        margin: 24px auto 16px auto;
+    }
+    
+    #gacha-result {
+        margin-top: 20px;
+        padding: 20px 12px;
+        border-radius: 16px;
     }
 }
 
-/* タブレット (768px - 1024px) */
+/* タブレット (769px - 1024px) - フルスクリーン */
 @media (min-width: 769px) and (max-width: 1024px) {
     .container {
-        max-width: 520px;
         padding: 40px 32px;
+    }
+    
+    form {
+        max-width: 600px;
     }
     
     h1 {
         font-size: 2.2rem;
+        margin: 32px 0 12px 0;
+    }
+    
+    .subtitle {
+        font-size: 1.1rem;
+        margin-bottom: 40px;
     }
     
     button {
-        min-width: 280px;
+        min-width: 320px;
+        margin: 40px auto 24px auto;
+    }
+    
+    #gacha-result {
+        margin-top: 32px;
+        padding: 32px 24px;
+        max-width: 600px;
     }
 }
 
-/* デスクトップ (1024px+) */
+/* デスクトップ (1025px+) - フルスクリーン（中央集約） */
 @media (min-width: 1025px) {
-    body {
-        padding: 40px;
+    .container {
+        padding: 60px 40px;
+        justify-content: center;
     }
     
-    .container {
-        max-width: 600px;
-        padding: 48px 40px;
+    form {
+        max-width: 700px;
     }
     
     h1 {
         font-size: 2.4rem;
+        margin: 40px 0 16px 0;
     }
     
     .subtitle {
         font-size: 1.2rem;
+        margin-bottom: 48px;
+    }
+    
+    .form-group {
+        margin-bottom: 28px;
     }
     
     input[type="text"],
@@ -300,12 +348,21 @@ button:active {
     select {
         padding: 20px 24px;
         font-size: 1.1rem;
+        border-radius: 18px;
     }
     
     button {
-        min-width: 320px;
+        min-width: 360px;
         min-height: 72px;
         font-size: 1.2rem;
+        margin: 48px auto 32px auto;
+    }
+    
+    #gacha-result {
+        margin-top: 40px;
+        padding: 40px 32px;
+        max-width: 700px;
+        border-radius: 24px;
     }
 }
 
