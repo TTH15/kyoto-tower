@@ -1,9 +1,13 @@
-/* 京都タワー SANDO バル アンケートアプリ - シンプル版 */
+/* 京都タワー SANDO バル アンケートアプリ - Liquid Glass モバイルファースト版 */
 
 :root {
     --primary-color: #007AFF;
     --secondary-color: #5856D6;
+    --accent-color: #FF6B6B;
     --text-color: #1d1d1f;
+    --glass-background: rgba(255, 255, 255, 0.25);
+    --glass-border: rgba(255, 255, 255, 0.3);
+    --glass-shadow: rgba(0, 0, 0, 0.1);
     --background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
 }
 
@@ -25,10 +29,28 @@ body {
 .container {
     max-width: 600px;
     margin: 0 auto;
-    background: rgba(255, 255, 255, 0.95);
-    border-radius: 20px;
-    padding: 40px;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+    background: var(--glass-background);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    border-radius: 24px;
+    padding: 32px 24px; /* モバイルファースト */
+    box-shadow: 
+        0 8px 32px var(--glass-shadow),
+        inset 0 1px 0 rgba(255, 255, 255, 0.5);
+    position: relative;
+    overflow: hidden;
+}
+
+.container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.8), transparent);
+    pointer-events: none;
 }
 
 h1 {
@@ -58,24 +80,29 @@ label {
     color: var(--text-color);
 }
 
-/* 共通のinputとselectスタイル */
+/* Liquid Glass フォーム要素 - モバイルファースト */
 input[type="text"],
 input[type="email"],
 textarea,
 select {
     width: 100%;
-    padding: 16px 20px;
-    border: 2px solid #e1e5e9;
-    border-radius: 12px;
-    font-size: 1rem;
+    padding: 18px 20px; /* タッチターゲット拡大 */
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    font-size: 16px; /* iOSズーム防止 */
     font-weight: 500;
     color: var(--text-color);
-    background: #ffffff;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    background: var(--glass-background);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: 
+        0 4px 16px var(--glass-shadow),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
     outline: none;
-    transition: all 0.2s ease;
-    min-height: 56px; /* タッチターゲット拡大 */
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    min-height: 56px; /* タッチターゲット推奨サイズ */
     touch-action: manipulation;
+    position: relative;
 }
 
 /* selectのカスタムスタイリング */
@@ -89,14 +116,20 @@ select {
     cursor: pointer;
 }
 
-/* フォーカス時のスタイル */
+/* Liquid Glass フォーカスエフェクト */
 input[type="text"]:focus,
 input[type="email"]:focus,
 textarea:focus,
 select:focus {
     border-color: var(--primary-color);
-    box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.1);
-    background: #ffffff;
+    background: rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    box-shadow: 
+        0 0 0 3px rgba(0, 122, 255, 0.2),
+        0 8px 24px var(--glass-shadow),
+        inset 0 1px 0 rgba(255, 255, 255, 0.5);
+    transform: translateY(-2px);
 }
 
 textarea {
@@ -104,41 +137,72 @@ textarea {
     min-height: 120px;
 }
 
+/* Liquid Glass ボタン */
 button {
     background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
     color: white;
-    padding: 18px 32px;
-    border: none;
-    border-radius: 16px;
+    padding: 20px 40px; /* タッチターゲット拡大 */
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 20px;
     cursor: pointer;
     font-size: 1.1rem;
-    font-weight: 600;
+    font-weight: 700;
     display: block;
-    margin: 32px auto 0;
-    min-width: 200px;
-    min-height: 56px;
-    box-shadow: 0 4px 16px rgba(0, 122, 255, 0.3);
-    transition: all 0.2s ease;
+    margin: 40px auto 0;
+    min-width: 240px; /* モバイルファースト */
+    min-height: 64px; /* タッチターゲット拡大 */
+    box-shadow: 
+        0 8px 24px rgba(0, 122, 255, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     touch-action: manipulation;
+    position: relative;
+    overflow: hidden;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
+button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: left 0.5s ease;
+}
+
+button:hover::before {
+    left: 100%;
 }
 
 button:active {
-    transform: translateY(1px);
-    box-shadow: 0 2px 8px rgba(0, 122, 255, 0.3);
+    transform: translateY(2px) scale(0.98);
+    box-shadow: 
+        0 4px 12px rgba(0, 122, 255, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
 
-/* ガチャ結果エリア */
+/* Liquid Glass ガチャ結果エリア */
 #gacha-result {
     margin-top: 40px;
-    padding: 30px;
-    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-    border-radius: 20px;
+    padding: 32px 24px;
+    background: linear-gradient(135deg, rgba(240, 147, 251, 0.3), rgba(245, 87, 108, 0.3));
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 24px;
     text-align: center;
     color: white;
     font-size: 1.2rem;
     font-weight: 600;
     display: none;
-    box-shadow: 0 8px 24px rgba(240, 147, 251, 0.4);
+    box-shadow: 
+        0 12px 32px rgba(240, 147, 251, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.5);
+    position: relative;
+    overflow: hidden;
 }
 
 #gacha-image {
@@ -150,30 +214,119 @@ button:active {
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
 }
 
-/* モバイル最適化 */
-@media (max-width: 768px) {
+/* モバイルファースト レスポンシブ設計 */
+
+/* 小さなモバイル (320px - 480px) */
+@media (max-width: 480px) {
     body {
-        padding: 10px;
+        padding: 12px;
     }
     
     .container {
-        padding: 24px;
-        border-radius: 16px;
+        padding: 20px 16px;
+        border-radius: 20px;
+        margin: 10px auto;
     }
     
     h1 {
-        font-size: 1.6rem;
+        font-size: 1.5rem;
+        margin-bottom: 6px;
     }
     
     .subtitle {
-        font-size: 1rem;
+        font-size: 0.95rem;
+        margin-bottom: 32px;
+    }
+    
+    .form-group {
+        margin-bottom: 20px;
     }
     
     input[type="text"],
     input[type="email"],
     textarea,
     select {
+        padding: 16px 18px;
         font-size: 16px; /* iOSズーム防止 */
+        border-radius: 14px;
+    }
+    
+    button {
+        padding: 18px 32px;
+        min-width: 200px;
+        min-height: 56px;
+        font-size: 1rem;
+    }
+}
+
+/* タブレット (768px - 1024px) */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .container {
+        max-width: 520px;
+        padding: 40px 32px;
+    }
+    
+    h1 {
+        font-size: 2.2rem;
+    }
+    
+    button {
+        min-width: 280px;
+    }
+}
+
+/* デスクトップ (1024px+) */
+@media (min-width: 1025px) {
+    body {
+        padding: 40px;
+    }
+    
+    .container {
+        max-width: 600px;
+        padding: 48px 40px;
+    }
+    
+    h1 {
+        font-size: 2.4rem;
+    }
+    
+    .subtitle {
+        font-size: 1.2rem;
+    }
+    
+    input[type="text"],
+    input[type="email"],
+    textarea,
+    select {
+        padding: 20px 24px;
+        font-size: 1.1rem;
+    }
+    
+    button {
+        min-width: 320px;
+        min-height: 72px;
+        font-size: 1.2rem;
+    }
+}
+
+/* GPU加速とパフォーマンス最適化 */
+.container,
+input[type="text"],
+input[type="email"],
+textarea,
+select,
+button,
+#gacha-result {
+    will-change: transform;
+    transform: translateZ(0); /* GPU層作成 */
+}
+
+/* ダークモード対応 */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --text-color: #ffffff;
+        --glass-background: rgba(0, 0, 0, 0.3);
+        --glass-border: rgba(255, 255, 255, 0.2);
     }
 }
 
@@ -182,5 +335,24 @@ button:active {
     * {
         transition: none !important;
         animation: none !important;
+    }
+    
+    .container,
+    input[type="text"],
+    input[type="email"],
+    textarea,
+    select,
+    button,
+    #gacha-result {
+        will-change: auto;
+        transform: none;
+    }
+}
+
+/* 高解像度ディスプレイ対応 */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    .container {
+        backdrop-filter: blur(24px);
+        -webkit-backdrop-filter: blur(24px);
     }
 }

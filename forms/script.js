@@ -1,32 +1,32 @@
 // 京都タワー SANDO バル アンケートアプリ - シンプル版
 
 document.addEventListener('DOMContentLoaded', function () {
-    
+
     // フォーム送信処理
     const form = document.getElementById('survey-form');
     const gachaResult = document.getElementById('gacha-result');
     const gachaImage = document.getElementById('gacha-image');
 
-    form.addEventListener('submit', function(e) {
+    form.addEventListener('submit', function (e) {
         e.preventDefault();
-        
+
         // フォームデータ取得
         const formData = new FormData(form);
         const responses = {};
-        
+
         // データを整理
         for (let [key, value] of formData.entries()) {
             responses[key] = value;
         }
-        
+
         // バリデーション
         if (!responses.origin || !responses.how_know || !responses.research_before || !responses.research_after) {
             alert('すべての項目を入力してください。');
             return;
         }
-        
+
         console.log('アンケート回答:', responses);
-        
+
         // ガチャ実行
         executeGacha();
     });
@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 <div>ガチャを回しています...</div>
             </div>
         `;
-        
+
         // ガチャ結果（ランダム）
         const prizes = [
             {
@@ -75,7 +75,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 description: "インスタ映えスポットでの撮影特典！"
             }
         ];
-        
+
         // ガチャ演出（2秒後に結果表示）
         setTimeout(() => {
             const randomPrize = prizes[Math.floor(Math.random() * prizes.length)];
@@ -86,7 +86,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // ガチャ結果表示
     function showGachaResult(prize) {
         const rarityColor = prize.rarity === 'レア' ? '#FFD700' : '#87CEEB';
-        
+
         gachaResult.innerHTML = `
             <div style="animation: bounceIn 0.6s ease-out;">
                 <div style="font-size: 4rem; margin-bottom: 16px;">${prize.image}</div>
@@ -107,7 +107,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 </div>
             </div>
         `;
-        
+
         // アニメーション追加
         const style = document.createElement('style');
         style.textContent = `
@@ -124,7 +124,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // フォーム入力のリアルタイムバリデーション
     const inputs = form.querySelectorAll('input, select, textarea');
     inputs.forEach(input => {
-        input.addEventListener('change', function() {
+        input.addEventListener('change', function () {
             if (this.value.trim() !== '') {
                 this.style.borderColor = '#28a745';
             } else {
@@ -135,9 +135,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // スムーズスクロール効果
     function smoothScrollToResult() {
-        gachaResult.scrollIntoView({ 
-            behavior: 'smooth', 
-            block: 'center' 
+        gachaResult.scrollIntoView({
+            behavior: 'smooth',
+            block: 'center'
         });
     }
 
