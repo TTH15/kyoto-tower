@@ -12,12 +12,19 @@ const SHEETS = {
 };
 
 /**
- * Web App のメインエントリーポイント
+ * Web App のメインエントリーポイント（CORS対応）
  */
 function doPost(e) {
     try {
+        // リクエストログを記録
+        console.log('doPost called with:', e);
+        console.log('postData:', e.postData);
+
         const data = JSON.parse(e.postData.contents);
         const action = data.action;
+
+        console.log('Action:', action);
+        console.log('Data:', data);
 
         switch (action) {
             case 'saveResponse':
@@ -33,6 +40,21 @@ function doPost(e) {
         console.error('Error in doPost:', error);
         return createResponse(false, 'Server error: ' + error.message);
     }
+}
+
+/**
+ * OPTIONS リクエスト対応（CORS プリフライト）
+ */
+function doOptions(e) {
+    return ContentService
+        .createTextOutput('')
+        .setMimeType(ContentService.MimeType.TEXT)
+        .setHeaders({
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+            'Access-Control-Allow-Headers': 'Content-Type',
+            'Access-Control-Max-Age': '3600'
+        });
 }
 
 /**
@@ -224,7 +246,7 @@ function getTranslations() {
 }
 
 /**
- * レスポンスオブジェクトを作成
+ * レスポンスオブジェクトを作成（CORS対応）
  */
 function createResponse(success, message, data = null) {
     const response = {
@@ -239,7 +261,13 @@ function createResponse(success, message, data = null) {
 
     return ContentService
         .createTextOutput(JSON.stringify(response))
-        .setMimeType(ContentService.MimeType.JSON);
+        .setMimeType(ContentService.MimeType.JSON)
+        .setHeaders({
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+            'Access-Control-Allow-Headers': 'Content-Type',
+            'Access-Control-Max-Age': '3600'
+        });
 }
 
 /**
