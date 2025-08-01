@@ -1,7 +1,7 @@
 // 京都タワー SANDO バル アンケートアプリ - Google スプレッドシート連携版
 
-// Google Apps Script Web App URL（デプロイ後に設定してください）
-const GAS_WEB_APP_URL = 'YOUR_GAS_WEB_APP_URL_HERE';
+// Google Apps Script Web App URL
+const GAS_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbw593RB4kx3nbQXiSzpjpw7VvT2-U3d6usKT7OZL-erRFSN_a6GdtwlRNd5Ag0U0RHomA/exec';
 
 // 多言語翻訳データ（スプレッドシートから取得予定、フォールバック用）
 const translations = {
