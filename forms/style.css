@@ -5,10 +5,10 @@
     --secondary-color: #5856D6;
     --accent-color: #FF6B6B;
     --text-color: #1d1d1f;
-    --glass-background: rgba(255, 255, 255, 0.25);
-    --glass-border: rgba(255, 255, 255, 0.3);
-    --glass-shadow: rgba(0, 0, 0, 0.1);
-    --background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    --glass-background: rgba(255, 255, 255, 0.15); /* より透明に */
+    --glass-border: rgba(255, 255, 255, 0.4);
+    --glass-shadow: rgba(0, 0, 0, 0.2);
+    --background: linear-gradient(135deg, rgba(102, 126, 234, 0.6) 0%, rgba(118, 75, 162, 0.6) 100%);
 }
 
 * {
@@ -19,7 +19,10 @@
 
 body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    background: var(--background);
+    background: 
+        var(--background),
+        url('IMG_6272.JPG') center/cover no-repeat;
+    background-blend-mode: overlay;
     color: var(--text-color);
     min-height: 100vh;
     min-height: 100dvh; /* 動的ビューポート高さ */
@@ -27,6 +30,7 @@ body {
     padding: 0;
     line-height: 1.6;
     overflow-x: hidden; /* 横スクロール防止 */
+    position: relative;
     
     /* iOS Safe Areaサポート */
     padding-top: env(safe-area-inset-top);
@@ -35,17 +39,32 @@ body {
     padding-right: env(safe-area-inset-right);
 }
 
+/* 京都タワー背景画像のオーバーレイ */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(102, 126, 234, 0.4); /* ブルーオーバーレイ */
+    z-index: -1;
+    pointer-events: none;
+}
+
 .container {
     width: 100%;
     min-height: 100vh;
     margin: 0;
     background: var(--glass-background);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
     border: none; /* フルスクリーン */
     border-radius: 0; /* ネイティブアプリ風 */
     padding: 20px 16px 40px 16px; /* モバイルファースト全画面 */
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    box-shadow: 
+        inset 0 1px 0 rgba(255, 255, 255, 0.5),
+        0 0 60px rgba(0, 0, 0, 0.1);
     position: relative;
     overflow: hidden;
     display: flex;
@@ -76,14 +95,16 @@ h1 {
     font-weight: 700;
     text-align: center;
     margin: 20px 0 8px 0;
-    color: var(--text-color);
+    color: #ffffff;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
 .subtitle {
     text-align: center;
-    color: rgba(255, 255, 255, 0.8);
+    color: rgba(255, 255, 255, 0.9);
     margin-bottom: 32px;
     font-size: 1rem;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
 }
 
 .form-group {
@@ -95,7 +116,8 @@ label {
     margin-bottom: 8px;
     font-weight: 600;
     font-size: 1rem;
-    color: var(--text-color);
+    color: #ffffff;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
 }
 
 /* Liquid Glass フォーム要素 - モバイルファースト */
@@ -110,12 +132,12 @@ select {
     font-size: 16px; /* iOSズーム防止 */
     font-weight: 500;
     color: var(--text-color);
-    background: var(--glass-background);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    background: rgba(255, 255, 255, 0.3); /* より不透明に */
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
     box-shadow: 
-        0 4px 16px var(--glass-shadow),
-        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+        0 6px 20px rgba(0, 0, 0, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.4);
     outline: none;
     transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     min-height: 56px; /* タッチターゲット推奨サイズ */
@@ -202,14 +224,14 @@ button:active {
         inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
 
-/* Liquid Glass ガチャ結果エリア - フルスクリーン */
+/* Liquid Glass ガチャ結果エリア - 京都タワーテーマ */
 #gacha-result {
     margin-top: 24px;
     padding: 24px 16px;
-    background: linear-gradient(135deg, rgba(240, 147, 251, 0.3), rgba(245, 87, 108, 0.3));
-    backdrop-filter: blur(24px);
-    -webkit-backdrop-filter: blur(24px);
-    border: 1px solid rgba(255, 255, 255, 0.4);
+    background: linear-gradient(135deg, rgba(220, 38, 27, 0.3), rgba(255, 140, 0, 0.3)); /* 京都タワーの赤とオレンジ */
+    backdrop-filter: blur(28px);
+    -webkit-backdrop-filter: blur(28px);
+    border: 1px solid rgba(255, 255, 255, 0.5);
     border-radius: 20px;
     text-align: center;
     color: white;
@@ -217,13 +239,14 @@ button:active {
     font-weight: 600;
     display: none;
     box-shadow: 
-        0 8px 24px rgba(240, 147, 251, 0.3),
-        inset 0 1px 0 rgba(255, 255, 255, 0.5);
+        0 12px 32px rgba(220, 38, 27, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.6);
     position: relative;
     overflow: hidden;
     max-width: 500px;
     margin-left: auto;
     margin-right: auto;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
 #gacha-image {
